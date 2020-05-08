@@ -43,14 +43,14 @@ router.post('/signin', function(req, res) {
 
         function(user) {
             if (user) {
-                bcrypt.compare(req.body.user.password, user.passwordhash, function (err, matches) {
+                bcrypt.compare(req.body.user.password, user.password, function (err, matches) {
                     //console.log("value matches:", matches);
                     if (matches) {
 
                         var token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
                         res.json({
                             user: user,
-                            message: "successfully suthenticated",
+                            message: "successfully authenticated",
                             sessionToken: token
                         });
                     } else {
