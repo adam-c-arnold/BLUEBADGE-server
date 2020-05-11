@@ -17,7 +17,7 @@ app.use(express.json());
 
 //app.use('/test', test);
 
-app.use('/api/user', user);
+app.use('/user', user);
 app.use(require('./middleware/validate-session'));
 //app.use('/authtest', authTest);
 

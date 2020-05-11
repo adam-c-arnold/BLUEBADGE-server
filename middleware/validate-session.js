@@ -5,8 +5,10 @@ const User = require('../db').import('../models/user');
 
 const validateSession = (req, res, next) => {
     const token = req.headers.authorization;
-
-    if (!token) {
+    if (req.method== 'OPTIONS') {
+        next()
+    }else {
+        if (!token) {
         return res.status(403).send({ auth: false, message: "No Token Provided"})
     } else {
         jwt.verify(token, process.env.JWT_SECRET, (err, decodeToken) => {
@@ -31,6 +33,10 @@ const validateSession = (req, res, next) => {
             }
         });
     }
+
+    }
+
+    
 };
 
 
