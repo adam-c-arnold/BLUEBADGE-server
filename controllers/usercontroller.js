@@ -1,18 +1,18 @@
 require('dotenv').config();
-var express = require('express');
-var router = express.Router();
-var sequelize = require('../db');
-var User = sequelize.import('../models/user');
-var bcrypt = require('bcryptjs');
-var jwt = require('jsonwebtoken');
+const express = require('express');
+const router = express.Router();
+const sequelize = require('../db');
+const User = sequelize.import('../models/user');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 
 router.post('/createuser', function (req, res) {
     
-    var firstName = req.body.user.firstName;
-    var lastName = req.body.user.lastName;
-    var email = req.body.user.email;
-    var password = req.body.user.password;
+    let firstName = req.body.user.firstName;
+    let lastName = req.body.user.lastName;
+    let email = req.body.user.email;
+    let password = req.body.user.password;
 
     User.create({
         firstName: firstName,
@@ -23,7 +23,7 @@ router.post('/createuser', function (req, res) {
     .then(
         function createSuccess(user) {
 
-            var token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
+            let token = jwt.sign({id: user.id}, process.env.JWT_SECRET, {expiresIn: 60*60*24});
 
             res.json({
                 user: user,
@@ -110,3 +110,4 @@ module.exports = router;
 
 
 // module.exports = router;
+

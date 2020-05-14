@@ -11,16 +11,22 @@ const validateSession = require('../middleware/validate-session');
  *** CREATE LOG ***
 ************************** */
 
-router.post('/log', validateSession, (req, res) => {
+router.post('/', validateSession, (req, res) => {
   const logRequest = {
-    description: req.log.description,
-    definition: req.log.definition,
-    result: req.log.result,
+    date: req.body.log.date,
+    activity: req.body.log.activity,
+    duration: req.body.log.duration,
+    notes: req.body.log.notes,
     owner: req.user.id
   }
   Log.create(logRequest)
-  .then ( log => res.status(200).json(log) )
-  .catch ( err => res.status(500).json({error: err}) )
+  .then ( log => {res.status(200).json(log)
+    console.log("this definitely fired.")
+  })
+  .catch ( err => {
+    res.status(500).json({error: err});
+    console.log("ya done fucked it-----------------------------------------------------------")
+  } )
 });  
 
 
@@ -28,19 +34,22 @@ router.post('/log', validateSession, (req, res) => {
  *** GET ALL BY OWNER ***
 ************************** */
 
-router.get("/log", validateSession, (req, res) => {
+router.get("/", validateSession, (req, res) => {
   Log.findAll({
     where: { owner : req.user.id }
   })
-    .then( logs => res.status(200).json(logs) )
-    .catch( err => res.status(500).json({ error: err }) )
+    .then( logs => res.status(200).json({response: logs}) )
+    .catch ( err => {
+      res.status(500).json({error: err});
+      console.log("ya done fucked it-----------------------------------------------------------")
+    } )
 });
 
 /* *************************
  *** GET LOGS BY ID ***
 ************************** */
 
-router.get('/log/:id', validateSession, (req, res) => {
+router.get('/:id', validateSession, (req, res) => {
   Log.findOne({ 
     where: { 
       id: req.params.id, 
@@ -55,7 +64,7 @@ router.get('/log/:id', validateSession, (req, res) => {
  *** UPDATE BY ID ***
 ************************** */
 
-router.put('/log/:id', validateSession, (req, res) => {
+router.put('/:id', validateSession, (req, res) => {
   Log.update(req.body.log, {
       where: { 
         id: req.params.id, 
@@ -71,7 +80,7 @@ router.put('/log/:id', validateSession, (req, res) => {
  *** DELETE LOG ***
 ************************** */
 
-router.delete("/log/:id", validateSession, (req, res) => {
+router.delete("/:id", validateSession, (req, res) => {
   Log.destroy({where: { 
     id: req.params.id, 
     owner: req.user.id

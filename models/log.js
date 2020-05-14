@@ -3,24 +3,29 @@ module.exports = (sequelize, DataTypes) => {
 const Log =  sequelize.define('log', {
     
 
-    location: {
+    date: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    activity: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    duration: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    notes: {
         type: DataTypes.STRING,
         allowNull: true
     },
 
-    rideDistance: {
-        type: DataTypes.INTEGER,
-        allowNull: false
-    },
-
-    rideWatts: {
+    owner: {
         type: DataTypes.INTEGER,
         allowNull: true
-    },
-
-    rideTime: {
-        type: DataTypes.INTEGER,
-        allowNull: false
     }
 
 
