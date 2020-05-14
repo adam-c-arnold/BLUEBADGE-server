@@ -24,9 +24,11 @@ const validateSession = (req, res, next) => {
                         .then((user) => {
                             if (!user) {
                                 throw err;
-                                console.log('ya done fucked it 2 electric boogaloo')    
+                                console.log(
+                                    "ya done ducked it 2 electric boogaloo"
+                                );
                             } else {
-                                console.log('ya didnt done fucked it')
+                                console.log("ya didnt done ducked it");
                             }
 
                             req.user = user;
